@@ -10,16 +10,37 @@ BONUS (facoltativo): all'inizio del gioco, il programma chiede all'utente il liv
 1 = l'intervallo di numeri possibili è tra 1 e 80
 2 = l'intervallo di numeri possibili è tra 1 e 50
 In ogni caso, le mine sono sempre 16.
+BONUS 2 (facoltativo): l'utente deve inserire un numero compreso tra 1 e 100.
 */
 
 // Initialization of variables and constants
 const mines_quantity = 16;
-var minimum_number = 1;
-var maximum_number = 100;
+const minimum_number = 1;
 var mines_array = [];
 var player_numbers_array = [];
-var maximum_attempts = maximum_number - mines_quantity;
 
+
+// ************ Selecting Game Difficulty Level ************
+do {
+  // Player's choice
+  var game_difficulty = parseInt(prompt('Please select the game difficulty level. Enter \'0\', \'1\', or \'2\'.'));
+} while (game_difficulty !== 0 && game_difficulty !== 1 && game_difficulty !== 2);
+console.log('You chose LEVEL ' + game_difficulty + '.');
+console.log('');
+
+// Game difficulty settings
+if (game_difficulty === 2) {
+  var maximum_number = 50;
+} else if (game_difficulty) {   // --> game difficulty === 1
+  maximum_number = 80;
+} else if (!game_difficulty) {  // --> game difficulty === 0
+  maximum_number = 100;
+}
+
+// Victory: calculating the maximum number of attempts
+var maximum_attempts = maximum_number - mines_quantity;
+console.log('Your maximum number of attempts is: ' + maximum_attempts + '.');
+console.log('');
 
 // ************ Generating the mines ************
 while (mines_array.length < mines_quantity) {
@@ -37,14 +58,16 @@ console.log('');
 
 // ********************* Game *********************
 // Check if the player number is a mine: mine found ends the game
-var mine_found = false;
+var isMineExploded = false;
 do {
   // Player's guess: he/she chooses a number
   var player_number = parseFloat(prompt('Enter a number.'));
   console.log('The number you entered is: ' + player_number + '.');
+
   // Check player number is not a mine (not in the mines array)
-  if (mines_array.includes(player_number)) {
-    mine_found = true;
+  var isGameOver = isMineFound(player_number, mines_array); // --> function
+  if (isGameOver) {
+    isMineExploded = true;
     console.log('You found a mine. You lose!');
     console.log('You scored: ' + player_numbers_array.length + '.');
     alert('You found a mine. You lose! You scored: ' + player_numbers_array.length + '.');
@@ -56,7 +79,7 @@ do {
   // Storing the player number in an array
     player_numbers_array.push(player_number);
   }
-} while (!mine_found && player_numbers_array.length < maximum_attempts);
+} while (!isMineExploded && player_numbers_array.length < maximum_attempts);
 
 // Victory: the player used the maximum number of attempts
 if (player_numbers_array.length === maximum_attempts) {
@@ -68,15 +91,16 @@ console.log('The array containing the player numbers is: ' , player_numbers_arra
 
 // ---------------------- Creation of functions ----------------------
 
-// Get random number
+// FUNCTION: Get random number
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-// function isMineFound(playerGuess, minesField) {
-//   var isMine = false;
-//   if (minesField.includes(playerGuess)) {
-//     isMine = true;
-//   }
-//   return isMine;
-// }
+// FUNCTION: Check if mine is found
+function isMineFound(playerGuess, minesField) {
+  var isMine = false;
+  if (minesField.includes(playerGuess)) {
+    isMine = true;
+  }
+  return isMine;
+}
