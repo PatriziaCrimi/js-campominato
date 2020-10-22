@@ -3,11 +3,72 @@
   <head>
     <meta charset="utf-8">
     <title>Minesweeper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>Minesweeper</h1>
-
+    <div id="page-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="text-center">Minesweeper</h1>
+          </div>
+        </div>
+        <div class="game-info-section">
+          <div class="row">
+            <div class="col-12">
+              <h2>Game Information</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p>Player one is <span class="player-name"></span>.</p>
+              <p>You chose LEVEL <span id="difficulty-level"></span>.</p>
+              <p>Your maximum number of attempts is: <span id="maximum-attempts"></span>.</p>
+            </div>
+          </div>
+        </div>
+        <div class="game-over-section">
+          <div class="row">
+            <div class="col-12">
+              <h2>Game Over!</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p id="winner"></p>
+              <p id="loser"></p>
+            </div>
+          </div>
+        </div>
+        <div class="game-results-section">
+          <div class="row">
+            <div class="col-12">
+              <i class="fas fa-medal text-center"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <h2 class="text-center">Game Results</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-xl-4">
+              <h3>Minefield</h3>
+              <p>You found a mine in position: <span id="mine-found"></span>.</p>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4">
+              <h3>Player's Score</h3>
+              <p><span class="player-name"></span>'s score is: <span id="score"></span>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="action.js"></script>
   </body>
 </html>

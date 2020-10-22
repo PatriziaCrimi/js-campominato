@@ -18,6 +18,7 @@ const mines_quantity = 16;
 const minimum_number = 1;
 var mines_array = [];
 var player_numbers_array = [];
+var player_name = prompt('PLAYER 1. Please enter your name.');
 
 
 // ************ Selecting Game Difficulty Level ************
@@ -74,14 +75,15 @@ do {
       console.log('You found a mine. You lose!');
       console.log('You scored: ' + player_numbers_array.length + '.');
       alert('You found a mine. You lose! You scored: ' + player_numbers_array.length + '.');
+      document.getElementById('loser').innerHTML = 'You found a mine. You lose!';
+      document.getElementById('mine-found').innerHTML = player_number;
+      document.getElementById('score').innerHTML = player_numbers_array.length;
       // Check player number has not already been chosen (not in player numbers array)
     } else if (player_numbers_array.includes(player_number)) {
-      console.log('ERROR. The value you entered is invalid. You had already entered this number.');
       alert('ERROR. The value you entered is invalid. You had already entered this number.');
     } else {
       // Storing the player number in an array
       player_numbers_array.push(player_number);
-      console.log('Well done! No mines found. Go ahead!');
       alert('Well done! No mines found. Go ahead!');
     }
   } else {
@@ -94,6 +96,9 @@ do {
 if (player_numbers_array.length === maximum_attempts) {
   console.log('You won! You scored: ' + player_numbers_array.length + '.');
   alert('You won! You scored: ' + player_numbers_array.length + '.');
+  document.getElementById('winner').innerHTML = 'Congratulations! You won!';
+  document.getElementById('mine-found').innerHTML = 'no mines found!';
+  document.getElementById('score').innerHTML = player_numbers_array.length;
 }
 
 console.log('The array containing the player numbers is: ' , player_numbers_array);
@@ -113,3 +118,20 @@ function isMineFound(playerGuess, minesField) {
   }
   return isMine;
 }
+
+
+// ---------------------- Print output in HTML ----------------------
+console.log('');
+console.log('----------- Print output in HTML -----------');
+
+// Print player name
+var print_player_name = document.getElementsByClassName('player-name');
+console.log(print_player_name);
+for (var i = 0; i < print_player_name.length; i++) {
+  print_player_name[i].innerHTML = player_name;
+}
+
+// Print game difficulty level
+document.getElementById('difficulty-level').innerHTML = game_difficulty;
+// Print number of maximum attempts
+document.getElementById('maximum-attempts').innerHTML = maximum_attempts;

@@ -1,0 +1,129 @@
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+h1 {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 50px 0 30px;
+  color: #04B486;
+  text-shadow: 3px 3px #088A68;
+}
+
+h2 {
+  font-weight: 800;
+  padding-bottom: 20px;
+}
+
+h3 {
+  padding: 20px 0 20px 10px;
+  font-weight: 700;
+  color: #B45F04;
+  text-shadow: 1px 1px #F7D358;
+}
+
+p {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+span {
+  font-weight: 700;
+}
+
+#page-wrapper {
+  width: 100%;
+  height: 100%;
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+}
+
+h1::before,
+h1::after {
+  content: '\f666';
+  font-weight: 700;
+  font-size: 40px;
+  font-family: "Font Awesome 5 Free";
+  color: #04B486;
+  text-shadow: 3px 3px #088A68;
+}
+
+h1::before {
+  margin-right: 30px;
+}
+
+h1::after {
+  margin-left: 30px;
+}
+
+.game-info-section,
+.game-over-section,
+.game-results-section {
+  padding: 20px 0;
+}
+
+.game-results-section i {
+  color: #04B486;
+  text-shadow: 3px 3px #088A68;
+  font-weight: 700;
+  font-size: 70px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.game-results-section p {
+  padding-left: 40px;
+}
+
+
+/******************** Media Query *********************/
+
+/* Responsive - Breakpoint Medium 768px md */
+@media screen and (min-width: 768px) {
+  .game-info-section,
+  .game-over-section,
+  .game-results-section {
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h3, p, .game-results-section p {
+    padding-left: 0;
+  }
+}
+
+/* Responsive - Breakpoint Extra Large 1200px xl */
+@media screen and (min-width: 1200px) {
+  h1 {
+    font-size: 60px;
+  }
+
+  h1::before,
+  h1::after {
+    font-size: 60px;
+  }
+
+  h1::before {
+    margin-right: 60px;
+  }
+
+  h1::after {
+    margin-left: 60px;
+  }
+
+  .game-info-section,
+  .game-over-section,
+  .game-results-section {
+    padding: 30px 0;
+  }
+
+  .game-results-section i {
+    font-weight: 900;
+    font-size: 80px;
+    margin-bottom: 30px;
+  }
+}
