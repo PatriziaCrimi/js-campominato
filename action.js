@@ -10,7 +10,7 @@ BONUS (facoltativo): all'inizio del gioco, il programma chiede all'utente il liv
 1 = l'intervallo di numeri possibili è tra 1 e 80
 2 = l'intervallo di numeri possibili è tra 1 e 50
 In ogni caso, le mine sono sempre 16.
-BONUS 2 (facoltativo): l'utente deve inserire un numero compreso tra 1 e 100.
+BONUS 2 (facoltativo): l'utente deve inserire un numero compreso tra 1 e 100, oppure 1 e 80, oppure 1 e 50 a seconda del livello di difficoltà selezionato.
 */
 
 // Initialization of variables and constants
@@ -42,6 +42,7 @@ var maximum_attempts = maximum_number - mines_quantity;
 console.log('Your maximum number of attempts is: ' + maximum_attempts + '.');
 console.log('');
 
+
 // ************ Generating the mines ************
 while (mines_array.length < mines_quantity) {
   // Generating random numbers (the mines)
@@ -61,23 +62,31 @@ console.log('');
 var isMineExploded = false;
 do {
   // Player's guess: he/she chooses a number
-  var player_number = parseFloat(prompt('Enter a number.'));
+  var player_number = parseFloat(prompt('Enter a number ranging from ' + minimum_number + ' to ' + maximum_number + '.'));
   console.log('The number you entered is: ' + player_number + '.');
 
-  // Check player number is not a mine (not in the mines array)
-  var isGameOver = isMineFound(player_number, mines_array); // --> function
-  if (isGameOver) {
-    isMineExploded = true;
-    console.log('You found a mine. You lose!');
-    console.log('You scored: ' + player_numbers_array.length + '.');
-    alert('You found a mine. You lose! You scored: ' + player_numbers_array.length + '.');
-  // Check player number has not already been chosen (not in player numbers array)
-  } else if (player_numbers_array.includes(player_number)) {
-    console.log('ERROR. The value you entered is invalid. You had already entered this number.');
-    alert('ERROR. The value you entered is invalid. You had already entered this number.');
+  // Check if player number is ranging from minimum number to maximum number
+  if (player_number >= minimum_number && player_number <= maximum_number) {
+    // Check player number is not a mine (not in the mines array)
+    var isGameOver = isMineFound(player_number, mines_array); // --> function
+    if (isGameOver) {
+      isMineExploded = true;
+      console.log('You found a mine. You lose!');
+      console.log('You scored: ' + player_numbers_array.length + '.');
+      alert('You found a mine. You lose! You scored: ' + player_numbers_array.length + '.');
+      // Check player number has not already been chosen (not in player numbers array)
+    } else if (player_numbers_array.includes(player_number)) {
+      console.log('ERROR. The value you entered is invalid. You had already entered this number.');
+      alert('ERROR. The value you entered is invalid. You had already entered this number.');
+    } else {
+      // Storing the player number in an array
+      player_numbers_array.push(player_number);
+      console.log('Well done! No mines found. Go ahead!');
+      alert('Well done! No mines found. Go ahead!');
+    }
   } else {
-  // Storing the player number in an array
-    player_numbers_array.push(player_number);
+    console.log('ERROR. The value you entered is invalid. Please try again.');
+    alert('ERROR. The value you entered is invalid. Please try again.');
   }
 } while (!isMineExploded && player_numbers_array.length < maximum_attempts);
 
