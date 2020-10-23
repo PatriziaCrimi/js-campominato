@@ -84,7 +84,16 @@ do {
     } else {
       // Storing the player number in an array
       player_numbers_array.push(player_number);
-      alert('Well done! No mines found. Go ahead!');
+      // Victory: the player used the maximum number of attempts (no mines found)
+      if (player_numbers_array.length === maximum_attempts) {
+        console.log('You won! You scored: ' + player_numbers_array.length + '.');
+        alert('You won! You scored: ' + player_numbers_array.length + '.');
+        document.getElementById('winner').innerHTML = 'Congratulations! You won!';
+        document.getElementById('mine-found').innerHTML = 'no mines found!';
+        document.getElementById('score').innerHTML = player_numbers_array.length;
+      } else {
+        alert('Well done! No mines found. Go ahead!');
+      }
     }
   } else {
     console.log('ERROR. The value you entered is invalid. Please try again.');
@@ -92,16 +101,8 @@ do {
   }
 } while (!isMineExploded && player_numbers_array.length < maximum_attempts);
 
-// Victory: the player used the maximum number of attempts
-if (player_numbers_array.length === maximum_attempts) {
-  console.log('You won! You scored: ' + player_numbers_array.length + '.');
-  alert('You won! You scored: ' + player_numbers_array.length + '.');
-  document.getElementById('winner').innerHTML = 'Congratulations! You won!';
-  document.getElementById('mine-found').innerHTML = 'no mines found!';
-  document.getElementById('score').innerHTML = player_numbers_array.length;
-}
-
 console.log('The array containing the player numbers is: ' , player_numbers_array);
+
 
 // ---------------------- Creation of functions ----------------------
 
