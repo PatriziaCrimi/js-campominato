@@ -16,9 +16,8 @@ BONUS 2 (facoltativo): l'utente deve inserire un numero compreso tra 1 e 100, op
 // Initialization of variables and constants
 const mines_quantity = 16;
 const minimum_number = 1;
-var mines_array = [];
 var player_numbers_array = [];
-var player_name = prompt('PLAYER 1. Please enter your name.');
+var player_name = prompt('PLAYER: Please enter your name.');
 
 
 // ************ Selecting Game Difficulty Level ************
@@ -29,50 +28,37 @@ do {
 console.log('You chose LEVEL ' + game_difficulty + '.');
 console.log('');
 
-// Game difficulty settings
-if (game_difficulty === 2) {
-  var maximum_number = 50;
-} else if (game_difficulty) {   // --> game difficulty === 1
-  maximum_number = 80;
-} else if (!game_difficulty) {  // --> game difficulty === 0
-  maximum_number = 100;
-}
+// Game difficulty settings: total amount of numbers that the player can guess
+var maximum_number = difficultySettings(game_difficulty); // --> function
 
-// Victory: calculating the maximum number of attempts
+// Condition for victory: calculating the maximum number of attempts
 var maximum_attempts = maximum_number - mines_quantity;
 console.log('Your maximum number of attempts is: ' + maximum_attempts + '.');
 console.log('');
 
 
-// ************ Generating the mines ************
-while (mines_array.length < mines_quantity) {
-  // Generating random numbers (the mines)
-  var new_mine = getRndInteger(minimum_number, maximum_number);
-  // Check if the new mine is equal to any existing mine --> then discard it
-  if (!mines_array.includes(new_mine)) {
-    // Storing the new mine into the mines array
-    mines_array.push(new_mine);
-  }
-}
-console.log('The array containing the mines is: ' , mines_array);
+// ************ Generating the minefield (with function) ************
+var mines_array = generatingMinefield(mines_quantity, minimum_number, maximum_number);
+
+console.log('The array containing the minefield is: ' , mines_array);
 console.log('');
 
 
-// ********************* Game *********************
+// ********************* Game Procedure *********************
 // Check if the player number is a mine: mine found ends the game
 var isMineExploded = false;
 do {
   // Player's guess: he/she chooses a number
-  var player_number = parseFloat(prompt('Enter a number ranging from ' + minimum_number + ' to ' + maximum_number + '.'));
+  var player_number = parseInt(prompt('Enter an integer number ranging from ' + minimum_number + ' to ' + maximum_number + '.'));
   console.log('The number you entered is: ' + player_number + '.');
 
-  // Check if player number is ranging from minimum number to maximum number
-  if (player_number >= minimum_number && player_number <= maximum_number) {
+  // Check if player number is an integer and ranging from minimum number to maximum number
+  if (!isNaN(player_number) && player_number >= minimum_number && player_number <= maximum_number) {
     // Check player number is not a mine (not in the mines array)
     var isGameOver = isMineFound(player_number, mines_array); // --> function
     if (isGameOver) {
       isMineExploded = true;
-      console.log('You found a mine. You lose!');
+      console.log('You found a mine in position: ' + player_number + '. You lose!');
       console.log('You scored: ' + player_numbers_array.length + '.');
       alert('You found a mine. You lose! You scored: ' + player_numbers_array.length + '.');
       document.getElementById('loser').innerHTML = 'You found a mine. You lose!';
@@ -84,14 +70,16 @@ do {
     } else {
       // Storing the player number in an array
       player_numbers_array.push(player_number);
-      // Victory: the player used the maximum number of attempts (no mines found)
+      // Check Victory
       if (player_numbers_array.length === maximum_attempts) {
+        // Victory: the player used the maximum number of attempts (no mines found)
         console.log('You won! You scored: ' + player_numbers_array.length + '.');
         alert('You won! You scored: ' + player_numbers_array.length + '.');
         document.getElementById('winner').innerHTML = 'Congratulations! You won!';
         document.getElementById('mine-found').innerHTML = 'no mines found!';
         document.getElementById('score').innerHTML = player_numbers_array.length;
       } else {
+        // No Victory: just go ahead
         alert('Well done! No mines found. Go ahead!');
       }
     }
@@ -101,17 +89,44 @@ do {
   }
 } while (!isMineExploded && player_numbers_array.length < maximum_attempts);
 
-console.log('The array containing the player numbers is: ' , player_numbers_array);
+console.log('The array containing the player\'s successful attempts is: ' , player_numbers_array);
 
 
 // ---------------------- Creation of functions ----------------------
 
-// FUNCTION: Get random number
+// ### FUNCTION: Game difficulty settings ###
+function difficultySettings(difficultyLevel) {
+  if (difficultyLevel === 2) {    // --> game difficulty === 2
+    var maxNum = 50;
+  } else if (difficultyLevel) {   // --> game difficulty === 1
+    maxNum = 80;
+  } else if (!difficultyLevel) {  // --> game difficulty === 0
+    maxNum = 100;
+  }
+  return maxNum; // --> total amount of numbers that the player can guess
+}
+
+//  ### FUNCTION: Get random number ###
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-// FUNCTION: Check if mine is found
+// ### FUNCTION: Generating the minefield ###
+function generatingMinefield(minesNum, minNum, maxNum) {
+  var minefield_array = [];
+  while (minefield_array.length < minesNum) {
+    // Generating random numbers (the mines)
+    var new_mine = getRndInteger(minNum, maxNum); // --> with function
+    // Check if the new mine is equal to any existing mine --> then discard it
+    if (!minefield_array.includes(new_mine)) {
+      // Storing the new mine into the mines array
+      minefield_array.push(new_mine);
+    }
+  }
+  return minefield_array;
+}
+
+// ### FUNCTION: Check if mine is found ###
 function isMineFound(playerGuess, minesField) {
   var isMine = false;
   if (minesField.includes(playerGuess)) {
