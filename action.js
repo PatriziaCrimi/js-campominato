@@ -52,8 +52,8 @@ do {
   var player_number = parseInt(prompt('Enter an integer number ranging from ' + minimum_number + ' to ' + maximum_number + '.'));
   console.log('The number you entered is: ' + player_number + '.');
 
-  // Check if player number is an integer and ranging from minimum number to maximum number
-  if (!isNaN(player_number) && player_number >= minimum_number && player_number <= maximum_number) {
+  // Check if player number is an integer && ranging from minimum number to maximum number (both included) --> with function
+  if (isInputValid(player_number, minimum_number, maximum_number)) {
     // Check player number is not a mine (not in the mines array)
     var isGameOver = isMineFound(player_number, mines_array); // --> function
     if (isGameOver) {
@@ -94,7 +94,27 @@ console.log('The array containing the player\'s successful attempts is: ' , play
 
 // ---------------------- Creation of functions ----------------------
 
-// ### FUNCTION: Game difficulty settings ###
+// ### FUNCTION: Game difficulty settings - SOLUTION 1 SWITCH ###
+function difficultySettings(difficultyLevel) {
+  switch (difficultyLevel) {
+    case 2: {                       // --> difficulty level === 2
+      var maxNum = 50;
+      break;
+    }
+    case 1: {                       // --> difficulty level === 1
+      maxNum = 80;
+      break;
+    }
+    case 0: {                       // --> difficulty level === 0
+      maxNum = 100;
+      break;
+    }
+  }
+  return maxNum; // --> total amount of numbers that the player can guess
+}
+
+/*
+### FUNCTION: Game difficulty settings - SOLUTION 2 ELSE-IF ###
 function difficultySettings(difficultyLevel) {
   if (difficultyLevel === 2) {    // --> game difficulty === 2
     var maxNum = 50;
@@ -105,6 +125,7 @@ function difficultySettings(difficultyLevel) {
   }
   return maxNum; // --> total amount of numbers that the player can guess
 }
+*/
 
 //  ### FUNCTION: Get random number ###
 function getRndInteger(min, max) {
@@ -124,6 +145,15 @@ function generatingMinefield(minesNum, minNum, maxNum) {
     }
   }
   return minefield_array;
+}
+
+// ### FUNCTION: Check if player number is an integer && ranging from minimum number to maximum number (both included) ###
+function isInputValid(num, minNum, maxNum) {
+  if (!isNaN(num) && num >= minNum && num <= maxNum) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // ### FUNCTION: Check if mine is found ###
