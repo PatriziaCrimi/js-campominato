@@ -96,9 +96,10 @@ console.log('The array containing the player\'s successful attempts is: ' , play
 
 // ### FUNCTION: Game difficulty settings - SOLUTION 1 SWITCH ###
 function difficultySettings(difficultyLevel) {
+var maxNum;
   switch (difficultyLevel) {
     case 2: {                       // --> difficulty level === 2
-      var maxNum = 50;
+      maxNum = 50;
       break;
     }
     case 1: {                       // --> difficulty level === 1
